@@ -24,20 +24,20 @@ document.head.insertAdjacentHTML('beforeend', `<style>${fontcss}</style>`)
 const menu = `
 <div id="buttonmenu" style="z-index: 999; height: 100%; width: 100%; background-color: transparent; position: absolute; display: none; flex-direction: column; align-items: center; justify-content: center">
     <div style="background-color: #1E1E1E; border: 2px solid white; width: 400px; padding: 25px; display: flex; flex-direction: column;">
-        <span style="font-size: 24px;cursor: pointer;align-self: flex-end;color: white;transform: scale(1);box-shadow: none;" id="closeBtn" onmouseover="this.style.transform='scale(1.01)'; this.style.boxShadow='0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06)';"onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='none';"onmousedown="this.style.transform='scale(0.95)';">&times;</span>
-        <h1 style="color: white; text-align: center;">Create a custom button</h1>
+        <span style="font-size: 24px; cursor: pointer; align-self: flex-end; color: white; transform: scale(1); box-shadow: none;" id="closeBtn" onmouseover="this.style.transform='scale(1.01)'; this.style.boxShadow='0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06)';" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='none';" onmousedown="this.style.transform='scale(0.95)';">&times;</span>
+        <h1 style="color: white; text-align: center;">Create a Custom Button</h1>
 
         <div style="margin: 20px auto">
-        <h1 style="font-size: 18px; color: white">Preview:</h1>
-        <div id="preview" style="; width: 200px; height: 50px; background-color: #007bff; border-radius: 5px; display: flex; justify-content: center; align-items: center;">
-            <span id="btntext" style="color: white; font-size: 16px;" contenteditable>Click to edit text</span>
-        </div>
+            <h2 style="font-size: 18px; color: white">Preview:</h2>
+            <div id="preview" style="width: 200px; height: 50px; background-color: #007bff; border-radius: 5px; display: flex; justify-content: center; align-items: center;">
+                <span id="btntext" style="color: white; font-size: 16px;" contenteditable>Click to Edit Text</span>
+            </div>
         </div>
 
         <div style="color: white !important; margin-top: 20px; margin-bottom: 7px">
-          <label for="font">Font:</label>
-            <select id="font">
-                <option disabled>Choose a font</option>
+            <label for="font">Font:</label>
+            <select id="font" style="margin-bottom: 10px;">
+                <option disabled selected>Choose a Font</option>
                 <option value="Source Code Pro">Source Code Pro</option>
                 <option value="Josefin Sans">Josefin Sans</option>
                 <option value="Comic Neue">Comic Neue</option>
@@ -69,9 +69,15 @@ const menu = `
             <br>
             <label for="btnTextColor">Text:</label>
             <input type="color" id="btnTextColor" value="#ffffff">
+          <br>
+            <label for="borderweight">Border Thickness:</label>
+            <input type="range" id="borderweight" min="0" max="5" value="0">
+            <br>
+            <label for="bordercolor">Border Color:</label>
+            <input type="color" id="bordercolor" value="#ffffff">
         </div>
 
-        <button id="outputButton">Create</button>
+        <button id="outputButton" onmouseover="this.style.transform='scale(1.01)'; this.style.boxShadow='0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06)';" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='none';" onmousedown="this.style.transform='scale(0.95)';" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Create</button>
     </div>
 </div>
 `;
@@ -84,6 +90,8 @@ document.getElementById('btnBorderRadius').addEventListener('input', updatePrevi
 document.getElementById('btnTextSize').addEventListener('input', updatePreview);
 document.getElementById('btnBgColor').addEventListener('input', updatePreview);
 document.getElementById('btnTextColor').addEventListener('input', updatePreview);
+document.getElementById('bordercolor').addEventListener('input', updatePreview);
+document.getElementById('borderweight').addEventListener('input', updatePreview);
 document.getElementById('font').addEventListener('input', updatePreview);
 document.getElementById('closeBtn').addEventListener('click', closeModal);
 document.getElementById('outputButton').addEventListener('click', outputBase64);
@@ -94,14 +102,17 @@ function updatePreview() {
     const height = document.getElementById('btnHeight').value + 'px';
     const borderRadius = document.getElementById('btnBorderRadius').value + 'px';
     const textSize = document.getElementById('btnTextSize').value + 'px';
+    const borderWeight = document.getElementById('borderweight').value + 'px';
     const bg = document.getElementById('btnBgColor').value
     const text = document.getElementById('btnTextColor').value
+    const borderColor = document.getElementById('bordercolor').value
     const font = document.getElementById('font').value
 
     const preview = document.getElementById('preview');
     preview.style.width = width;
     preview.style.height = height;
     preview.style.borderRadius = borderRadius;
+    preview.style.border = borderWeight + ' solid ' + borderColor;
     preview.style.backgroundColor = bg;
     preview.children[0].style.color = text;
     preview.children[0].style.fontFamily = font;
@@ -123,6 +134,7 @@ function closeModal() {
 }
 
 function addCostume(dataURL) {
+    closeModal()
     let name = document.getElementById('btntext').innerText
     let costume = {
     img: new Image(),
@@ -140,7 +152,7 @@ costume.img.onload = function () {
     currentSprite.costumes.add(costume.cst);
 };
 costume.img.src = dataURL;
-    closeModal()
+
 }
 
 
