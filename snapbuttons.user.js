@@ -2,7 +2,7 @@
 // @name         Snap! Custom Buttons
 // @namespace    https://snap.berkeley.edu
 // @version      2024-02-05
-// @description  adds a new menu to Snap! that allows for the creation of customizable buttons
+// @description  adds a new menu to Snap! that allows for the creation of customizable buttons. Press `m` and `b` on you keyboard at the same time to open
 // @author       beanfrog (Graeme Kieran)
 // @match        https://snap.berkeley.edu/snap/snap.html
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=snap.berkeley.edu
